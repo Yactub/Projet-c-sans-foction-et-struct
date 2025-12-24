@@ -18,7 +18,7 @@ int main() {
 
     int nbEtu = 0;
     int nbMat = -1;
-    int choix , j , i , existe , ok ,sc , rid , pos , mode , found ,k , max , min ;
+    int choix , j , i , existe , ok ,sc , rid , pos , mode , found ,k , max , min, tid , cond ;
 
     float s ;
 
@@ -159,11 +159,11 @@ int main() {
 
 /*---------------------- Calculs 1) Moyenne ponderée par etudiant ------------------------- */
 
-                s += note[nbEtu][j] * coef[j];
+                s += note[nbEtu][j] * (float)coef[j];
                 sc += coef[j];
             }
 
-            moyenne[nbEtu] = (sc != 0) ? (s / sc) : 0;
+            moyenne[nbEtu] = (sc != 0) ? (s / (float)sc) : 0;
             nbEtu++;
 
 /*---------------------------------------------------------------------------------------------*/
@@ -222,11 +222,11 @@ int main() {
                         printf("Erreur: note (0..20).\n");
                 } while (note[pos][j] < 0 || note[pos][j] > 20);
 
-                s += note[pos][j] * coef[j];
+                s += note[pos][j] * (float)coef[j];
                 sc += coef[j];
             }
 
-            moyenne[pos] = (sc != 0) ? (s / sc) : 0;
+            moyenne[pos] = (sc != 0) ? (s / (float)sc) : 0;
             printf("OK: etudiant mis a jour (ecrase).\n");
         }
 
@@ -316,7 +316,7 @@ int main() {
                 for (j = i + 1; j < nbEtu; j++) {
                     if (moyenne[i] < moyenne[j]) {
                         float tm = moyenne[i]; moyenne[i] = moyenne[j]; moyenne[j] = tm;
-                        int tid = id[i]; id[i] = id[j]; id[j] = tid;
+                        tid = id[i]; id[i] = id[j]; id[j] = tid;
 
                         char t[STR];
                         strcpy(t, nom[i]); strcpy(nom[i], nom[j]); strcpy(nom[j], t);
@@ -342,7 +342,7 @@ int main() {
 
             for (i = 0; i < nbEtu - 1; i++) {
                 for (j = i + 1; j < nbEtu; j++) {
-                    int cond = 0;
+                    cond = 0;
 
 /*---------------------- Calculs 2) trier alphabitique  -------------------------*/
 
@@ -351,7 +351,7 @@ int main() {
 
                     if (cond) {
                         float tm = moyenne[i]; moyenne[i] = moyenne[j]; moyenne[j] = tm;
-                        int tid = id[i]; id[i] = id[j]; id[j] = tid;
+                        tid = id[i]; id[i] = id[j]; id[j] = tid;
 
                         char t[STR];
                         strcpy(t, nom[i]); strcpy(nom[i], nom[j]); strcpy(nom[j], t);
@@ -383,7 +383,7 @@ int main() {
             for (j = 0; j < nbMat; j++) {
                 s = 0;
                 for (i = 0; i < nbEtu; i++) s += note[i][j];
-                printf("%s : %.2f\n", matNom[j], s / nbEtu);
+                printf("%s : %.2f\n", matNom[j], s / (float)nbEtu);
 
 //----------------------------------------------------------------------------------//
             }
@@ -399,7 +399,7 @@ int main() {
 //---------------------- Calculs 4) Moyenne globale ------------------------- //
 
             for (i = 0; i < nbEtu; i++) s += moyenne[i];
-            printf("Moyenne globale: %.2f\n", s / nbEtu);
+            printf("Moyenne globale: %.2f\n", s / (float)nbEtu);
 
 //----------------------------------------------------------------------------------//
 
